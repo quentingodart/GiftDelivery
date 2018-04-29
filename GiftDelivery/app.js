@@ -3,6 +3,10 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var morgan = require('morgan');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var config = require('./config/database');
 
 var api = require('./routes/api');
 var app = express();
@@ -33,3 +37,18 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+// create connection to MongoDB
+mongoose.Promise = require('bluebird');
+mongoose.connect(config.database, { promiseLibrary: require('bluebird') })
+  .then(() =>  console.log('connection succesful'))
+  .catch((err) => console.error(err));
+
+// variable for API route
+var api = require('./routes/api');
+
+// initialise passport
+app.use(passport.initialize());
+
+// add API route to the endpoint URL after other 'use' function
+app.use('/api', api);
