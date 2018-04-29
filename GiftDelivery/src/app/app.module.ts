@@ -25,7 +25,7 @@ const appRoutes : Routes = [
     data: { title: 'Accueil' }
   },
   {
-    path: 'connection',
+    path: 'connexion',
     component: LoginComponent,
     data: { title: 'Connection' }
   },
