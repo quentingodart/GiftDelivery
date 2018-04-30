@@ -61,11 +61,24 @@ router.post('/signin', function(req, res) {
   });
 });
 
+// Get utilisateur courant
+router.get('/me', passport.authenticate('jwt', { session: false}), function(req, res) {
+  var token = getToken(req.headers);
+  if (token) {
+    User.find(function (err, user) {
+      if (err) return next(err);
+      res.json(user);
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'Vous n\'avez pas les authorisations nécessaires.'});
+  }
+});
+
 // Get liste des produits
 router.get('/product', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = getToken(req.headers);
   if (token) {
-    Product.find(function (err, books) {
+    Product.find(function (err, products) {
       if (err) return next(err);
       res.json(products);
     });
