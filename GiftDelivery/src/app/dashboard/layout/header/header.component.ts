@@ -7,9 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  private signup : boolean = false;
+
+  constructor() {
+    if (localStorage.getItem("userToken"))
+      this.signup = true;
+    else
+      this.signup = false;
+  }
 
   ngOnInit() {
   }
 
+  disconnect() {
+    localStorage.removeItem("userToken");
+    window.location.reload();
+  }
 }

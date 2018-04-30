@@ -33,7 +33,7 @@ constructor(private http: HttpClient, private router: Router) { }
       this.loginData = { username:this.loginUsername, password:this.loginPassword };
       this.http.post('/api/signin',this.loginData).subscribe(resp => {
       this.data = resp;
-      localStorage.setItem('jwtToken', this.data.token);
+      localStorage.setItem('userToken', this.data.token);
 
       this.router.navigate(["/accueil"]);
 

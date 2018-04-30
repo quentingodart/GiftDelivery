@@ -36,6 +36,16 @@ const appRoutes : Routes = [
     component: SigninComponent,
     data: { title: 'Inscription' }
   },
+  {
+    path: 'profil',
+    component: ProfilComponent,
+    data: { title: 'Profil' }
+  },
+  {
+    path: 'panier',
+    component: BasketComponent,
+    data: { title: 'Mon panier' }
+  },
   { path: '**', component: DashboardComponent }
 ];
 

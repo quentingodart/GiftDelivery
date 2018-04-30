@@ -10,9 +10,13 @@
     </ul>
 
       <ul class="nav navbar-nav navbar-right">
+        <ng-container *ngIf="signup == false">
         <li><a [routerLink]="['/connexion']">Se connecter</a></li>
         <li><a [routerLink]="['/inscription']">S'inscrire</a></li>
-        <li><a>Se déconnecter</a></li>
+        </ng-container>
+        <ng-container *ngIf="signup == true">
+        <li (click)="disconnect()" style="cursor: pointer;"><a>Se déconnecter</a></li>
+        </ng-container>
       </ul>
 
   </div><!-- /.container-fluid -->
