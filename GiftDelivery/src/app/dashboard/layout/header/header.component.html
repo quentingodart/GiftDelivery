@@ -4,7 +4,9 @@
       <a class="navbar-brand" [routerLink]="['/accueil']">GiftDelivery</a>
     </div>
     <ul class="nav navbar-nav navbar-left">
+      <ng-container *ngIf="signup == true">
       <li><a [routerLink]="['/accueil']">Mon profil</a></li>
+      </ng-container>
       <li><a [routerLink]="['/accueil']">Mon panier</a></li>
       <li><a [routerLink]="['/accueil']">A propos</a></li>
     </ul>
@@ -15,6 +17,7 @@
         <li><a [routerLink]="['/inscription']">S'inscrire</a></li>
         </ng-container>
         <ng-container *ngIf="signup == true">
+        <li *ngIf='username != ""'><a>{{this.username}}</a></li>
         <li (click)="disconnect()" style="cursor: pointer;"><a>Se déconnecter</a></li>
         </ng-container>
       </ul>
