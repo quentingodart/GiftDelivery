@@ -6,12 +6,14 @@ var config = require('../config/database');
 require('../config/passport')(passport);
 var jwt = require('jsonwebtoken');
 var User = require("../models/Utilisateur");
+var Product = require("../models/Produit");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.send('Express RESTful API');
 });
 
+// Inscription
 router.post('/signup', function(req, res) {
   if (!req.body.username || !req.body.firstname || !req.body.lastname ||
     !req.body.email || !req.body.password) {
@@ -34,6 +36,7 @@ router.post('/signup', function(req, res) {
   }
 });
 
+// Connexion
 router.post('/signin', function(req, res) {
   User.findOne({
     username: req.body.username
@@ -57,5 +60,32 @@ router.post('/signin', function(req, res) {
     }
   });
 });
+
+// Get liste des produits
+router.get('/product', passport.authenticate('jwt', { session: false}), function(req, res) {
+  var token = getToken(req.headers);
+  if (token) {
+    Product.find(function (err, books) {
+      if (err) return next(err);
+      res.json(products);
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'Vous n\'avez pas les authorisations nécessaires.'});
+  }
+});
+
+// Parse le token
+getToken = function (headers) {
+  if (headers && headers.authorization) {
+    var parted = headers.authorization.split(' ');
+    if (parted.length === 2) {
+      return parted[1];
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
+};
 
 module.exports = router;
