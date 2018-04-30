@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { tap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'app-signin',
@@ -15,9 +19,10 @@ export class SigninComponent implements OnInit {
   private password : string = "";
   private confirmPassword : string = "";
 
+  private signupData = { username:'', firstname:'', lastname:'', email:'', password:'' };
   private message : string = "";
 
-  constructor(private router: Router) { }
+constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
   }
@@ -30,7 +35,16 @@ export class SigninComponent implements OnInit {
             console.log("lastname : " + this.lastname + " firstname : " + this.firstname + " username : " + this.username + " email : " +
             this.email + " password : " + this.password + " confirmPassword : " + this.confirmPassword);
             this.message = null;
+
+            this.signupData = {username:this.username, firstname:this.firstname,
+              lastname:this.lastname, email:this.email, password:this.password};
+            this.http.post('/api/signup',this.signupData).subscribe(resp => {
+            console.log(resp);
             this.router.navigate(["/accueil"]);
+          }, err => {
+            this.message = err.error.msg;
+          });
+
           }
           else {
             this.message = "Les deux mots de passe doivent être identiques.";
