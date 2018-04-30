@@ -13,7 +13,6 @@ import { LayoutComponent } from './dashboard/layout/layout.component';
 import { HeaderComponent } from './dashboard/layout/header/header.component';
 import { FooterComponent } from './dashboard/layout/footer/footer.component';
 
-
 const appRoutes : Routes = [
   {
     path: '',
