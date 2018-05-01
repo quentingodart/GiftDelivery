@@ -15,7 +15,7 @@ export class ProfilComponent implements OnInit {
   private userToken : string = "";
   private username : string = "";
 
-  private user : any;
+  private user : any = null;
 
   constructor(private http: HttpClient, private router: Router) {
 
