@@ -10,8 +10,8 @@
             <form action="" class="search-form">
                 <div class="form-group has-feedback">
             		<label for="search" class="sr-only">Rechercher</label>
-            		<input type="text" class="form-control" name="search" id="search" placeholder="search">
-              		<span class="glyphicon glyphicon-search form-control-feedback"></span>
+            		<input type="text" class="form-control" name="search" id="search" placeholder="search" [(ngModel)]="searchContent">
+              		<span class="glyphicon glyphicon-search form-control-feedback" (click)="searchProduct()"></span>
             	</div>
             </form>
         </div>
@@ -26,7 +26,7 @@
                 class="glyphicon glyphicon-th"></span>Vue Grille</a>
         </div>
     </div>
-    <div id="products" class="row list-group" *ngIf="products != null">
+    <div id="products" class="row list-group" *ngIf='products != null && searchContent == ""'>
 
         <div class="item  col-xs-4 col-lg-4" *ngFor="let product of products">
             <div class="thumbnail">
@@ -48,20 +48,24 @@
                 </div>
             </div>
         </div>
-        <!--
-        <div class="item  col-xs-4 col-lg-4">
+    </div>
+
+
+
+    <div id="searchedproducts" class="row list-group" *ngIf='searchedProduct != null && searchContent != ""'>
+
+        <div class="item  col-xs-4 col-lg-4" *ngFor="let product of searchedProduct">
             <div class="thumbnail">
-                <img class="group list-group-image" src="https://i.pinimg.com/originals/a4/9b/c7/a49bc722099b1f05beafdf410919ec5e.jpg" alt="" />
+                <img class="group list-group-image" [src]=product.image alt="" />
                 <div class="caption">
                     <h4 class="group inner list-group-item-heading">
-                        Bouquet de Tulipes</h4>
+                        {{product.name}}</h4>
                     <p class="group inner list-group-item-text">
-                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                        {{product.description}}</p>
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
                             <p class="lead">
-                                $59.99</p>
+                                {{product.price}}$</p>
                         </div>
                         <div class="col-xs-12 col-md-6">
                             <a class="btn btn-success">Ajouter au panier</a>
@@ -70,89 +74,5 @@
                 </div>
             </div>
         </div>
-        <div class="item  col-xs-4 col-lg-4">
-            <div class="thumbnail">
-                <img class="group list-group-image" src="http://wallpapers4screen.com/Uploads/30-1-2016/24847/thumb-the-cubs-teddy-bears-bear-plush-toy.jpg" alt="" />
-                <div class="caption">
-                    <h4 class="group inner list-group-item-heading">
-                        Oursons en peluche</h4>
-                    <p class="group inner list-group-item-text">
-                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            <p class="lead">
-                                $20.000</p>
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success">Ajouter au panier</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item  col-xs-4 col-lg-4">
-            <div class="thumbnail">
-                <img class="group list-group-image" src="https://i.pinimg.com/originals/d0/75/77/d075771d6af48e598096cf7e7bc29ac1.jpg" alt="" />
-                <div class="caption">
-                    <h4 class="group inner list-group-item-heading">
-                        Assortiment de chocolat</h4>
-                    <p class="group inner list-group-item-text">
-                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            <p class="lead">
-                                $25.000</p>
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success">Ajouter au panier</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item  col-xs-4 col-lg-4">
-            <div class="thumbnail">
-                <img class="group list-group-image" src="https://i.pinimg.com/originals/ef/58/02/ef580210c6b16f664150c8a88f2632a4.jpg" alt="" />
-                <div class="caption">
-                    <h4 class="group inner list-group-item-heading">
-                        Boite de chocolat</h4>
-                    <p class="group inner list-group-item-text">
-                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            <p class="lead">
-                                $21.000</p>
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success">Ajouter au panier</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item  col-xs-4 col-lg-4">
-            <div class="thumbnail">
-                <img class="group list-group-image" src="http://www.ronanlucas-joaillier.fr/wp-content/uploads/2015/11/123-400x250.png" alt="" />
-                <div class="caption">
-                    <h4 class="group inner list-group-item-heading">
-                        Collier</h4>
-                    <p class="group inner list-group-item-text">
-                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            <p class="lead">
-                                $70.000</p>
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success">Ajouter au panier</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
 </div>

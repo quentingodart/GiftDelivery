@@ -16,6 +16,9 @@ export class DashboardComponent implements OnInit {
 
   private products : any = null;
 
+  private searchedProduct : any = null;
+  private searchContent : string = "";
+
   constructor(private http: HttpClient, private router: Router) {
     this.userToken = localStorage.getItem("userToken");
     this.getProducts();
@@ -31,4 +34,15 @@ export class DashboardComponent implements OnInit {
     console.log("Récupération produits erreur");
   });
   }
+
+  searchProduct() {
+    this.searchedProduct = null;
+    this.http.get('/api/product/search', {params: {name: this.searchContent}}).subscribe(data => {
+      this.searchedProduct = data;
+    }, err => {
+      if(err.status === 401) {
+        console.log("Récupération produit recherché erreur");
+      }
+    });
+    }
 }
