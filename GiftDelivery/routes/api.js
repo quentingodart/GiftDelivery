@@ -65,9 +65,23 @@ router.post('/signin', function(req, res) {
 router.get('/me', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = getToken(req.headers);
   if (token) {
-    User.findOne(function (err, user) {
-      if (err) return next(err);
-      res.json(user);
+
+    User.findOne({
+      username: req.body.username
+    }, function(err, user) {
+      if (err) throw err;
+
+      if (!user) {
+        res.status(401).send({success: false, msg: 'Utilisateur non trouvé.'});
+      } else {
+        var copyUser = new User({
+          username: user.username,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          email: user.email
+        });
+        res.json(copyUser);
+      }
     });
   } else {
     return res.status(403).send({success: false, msg: 'Vous n\'avez pas les authorisations nécessaires.'});
