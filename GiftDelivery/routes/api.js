@@ -84,6 +84,21 @@ router.get('/product', function(req, res) {
     });
 });
 
+// Recherche d'un produit
+router.get('/product/search', function(req, res) {
+  Product.find({
+    name: req.query.name
+  }, function(err, product) {
+    if (err) throw err;
+
+    if (!product) {
+      res.status(401).send({success: false, msg: 'Aucun produit trouvé.'});
+    } else {
+      res.json(product);
+    }
+  });
+});
+
 // Parse le token
 getToken = function (headers) {
   if (headers && headers.authorization) {
