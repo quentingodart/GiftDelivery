@@ -1,27 +1,27 @@
 <app-layout></app-layout>
 <div class="container">
     <div class="well well-sm">
-        <strong>Category Title</strong>
+        <strong>Produits</strong>
         <div class="btn-group">
             <a id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
-            </span>List</a> <a id="grid" class="btn btn-default btn-sm"><span
-                class="glyphicon glyphicon-th"></span>Grid</a>
+            </span>Vue liste</a> <a id="grid" class="btn btn-default btn-sm"><span
+                class="glyphicon glyphicon-th"></span>Vue Grille</a>
         </div>
     </div>
-    <div id="products" class="row list-group">
-        <div class="item  col-xs-4 col-lg-4">
+    <div id="products" class="row list-group" *ngIf="products != null">
+
+        <div class="item  col-xs-4 col-lg-4" *ngFor="let product of products">
             <div class="thumbnail">
-                <img class="group list-group-image" src="http://pourleplaisir72.p.o.pic.centerblog.net/bqa25fwq.jpg" alt="" />
+                <img class="group list-group-image" [src]=product.image alt="" />
                 <div class="caption">
                     <h4 class="group inner list-group-item-heading">
-                        Bouquet de Fleur</h4>
+                        {{product.name}}</h4>
                     <p class="group inner list-group-item-text">
-                        Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                        {{product.description}}</p>
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
                             <p class="lead">
-                                $49.99</p>
+                                {{product.price}}$</p>
                         </div>
                         <div class="col-xs-12 col-md-6">
                             <a class="btn btn-success">Ajouter au panier</a>
@@ -30,6 +30,7 @@
                 </div>
             </div>
         </div>
+        <!--
         <div class="item  col-xs-4 col-lg-4">
             <div class="thumbnail">
                 <img class="group list-group-image" src="https://i.pinimg.com/originals/a4/9b/c7/a49bc722099b1f05beafdf410919ec5e.jpg" alt="" />
@@ -134,6 +135,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
