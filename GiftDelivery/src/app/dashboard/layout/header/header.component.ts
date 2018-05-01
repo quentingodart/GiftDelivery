@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,7 @@ export class HeaderComponent implements OnInit {
   private signup : boolean = false;
   private username : string = "";
 
-  constructor() {
+  constructor(private router : Router) {
     if (localStorage.getItem("userToken")) {
       this.signup = true;
       this.username = localStorage.getItem("username");
@@ -25,6 +26,7 @@ export class HeaderComponent implements OnInit {
   disconnect() {
     localStorage.removeItem("userToken");
     localStorage.removeItem("username");
-    window.location.reload();
+    this.router.navigate(['/acc']);
+    //window.location.reload();
   }
 }
