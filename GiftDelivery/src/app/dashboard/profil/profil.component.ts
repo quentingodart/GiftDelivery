@@ -27,14 +27,14 @@ export class ProfilComponent implements OnInit {
   ngOnInit() {
   }
 
+private Data = {username:''};
   getUser() {
-  //   let httpOptions = {headers: new HttpHeaders({'Authorization': this.userToken}), body: this.username}
-  //   this.http.get('/api/me', httpOptions).subscribe(resp => {
-  //   this.user = resp;
-  //   console.log("Récuprération de l'utilisateur : " + this.user);
-  //   console.log("User1 : " + this.user.username);
-  // }, err => {
-  //   console.log("Récupération profil erreur");
-  // });
+    this.http.get('/api/me', {params: {username : this.username}}).subscribe(resp => {
+    this.user = resp;
+    console.log("Récuprération de l'utilisateur : " + this.user);
+    console.log("User1 : " + this.user.username);
+  }, err => {
+    console.log("Récupération profil erreur");
+  });
   }
 }
