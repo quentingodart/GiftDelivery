@@ -25,11 +25,8 @@ export class DashboardComponent implements OnInit {
   }
 
   getProducts() {
-    let httpOptions = {headers: new HttpHeaders({'Authorization': this.userToken})}
-    this.http.get('/api/product', httpOptions).subscribe(resp => {
+    this.http.get('/api/product').subscribe(resp => {
     this.products = resp;
-    console.log("Récuprération des produits : " + this.products);
-    console.log("Produit 1 : " + this.products[0].name);
   }, err => {
     console.log("Récupération produits erreur");
   });

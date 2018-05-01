@@ -30,7 +30,7 @@ export class ProfilComponent implements OnInit {
     this.http.get('/api/me', httpOptions).subscribe(resp => {
     this.user = resp;
     console.log("Récuprération de l'utilisateur : " + this.user);
-    console.log("User1 : " + this.user[0].username);
+    console.log("User1 : " + this.user.username);
   }, err => {
     console.log("Récupération profil erreur");
   });

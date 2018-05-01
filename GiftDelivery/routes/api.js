@@ -75,16 +75,11 @@ router.get('/me', passport.authenticate('jwt', { session: false}), function(req,
 });
 
 // Get liste des produits
-router.get('/product', passport.authenticate('jwt', { session: false}), function(req, res) {
-  var token = getToken(req.headers);
-  if (token) {
+router.get('/product', function(req, res) {
     Product.find(function (err, products) {
       if (err) return next(err);
       res.json(products);
     });
-  } else {
-    return res.status(403).send({success: false, msg: 'Vous n\'avez pas les authorisations nécessaires.'});
-  }
 });
 
 // Parse le token
