@@ -63,29 +63,58 @@ router.post('/signin', function(req, res) {
 
 // Get utilisateur courant
 router.get('/me', passport.authenticate('jwt', { session: false}), function(req, res) {
-  var token = getToken(req.headers);
-  if (token) {
 
-    User.findOne({
-      username: req.body.username
-    }, function(err, user) {
-      if (err) throw err;
+  // check header or url parameters or post parameters for token
+    var token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers['authorization'];
 
-      if (!user) {
-        res.status(401).send({success: false, msg: 'Utilisateur non trouvé.'});
-      } else {
-        var copyUser = new User({
-          username: user.username,
-          firstname: user.firstname,
-          lastname: user.lastname,
-          email: user.email
-        });
-        res.json(copyUser);
-      }
-    });
-  } else {
-    return res.status(403).send({success: false, msg: 'Vous n\'avez pas les authorisations nécessaires.'});
-  }
+    // decode token
+    if (token) {
+
+      var hash = config.secret.replace(/^\$2y(.+)$/i, '\$2a$1');
+      // verifies secret
+      jwt.verify(token, hash, function (err, decoded) {
+        if (err) {
+          return res.status(403).json({ message: 'Invalid token' });
+        } else {
+          // if everything is good, save to request for use in other routes
+          req.decoded = decoded;
+          User.getUserInformationById(req.decoded.id, function (err, user) {
+            req.currentUser = user;
+            next();
+          });
+        }
+      });
+    } else {
+      // if there is no token
+
+      return res.status(403).json({
+        message: 'Invalid token'
+      });
+    }
+
+  // var token = getToken(req.headers);
+  // if (token) {
+  //
+  //   User.findOne({
+  //     username: req.body.username
+  //   }, function(err, user) {
+  //     if (err) throw err;
+  //
+  //     if (!user) {
+  //       res.status(401).send({success: false, msg: 'Utilisateur non trouvé.'});
+  //     } else {
+  //       var copyUser = new User({
+  //         username: user.username,
+  //         firstname: user.firstname,
+  //         lastname: user.lastname,
+  //         email: user.email
+  //       });
+  //       res.json(copyUser);
+  //     }
+  //   });
+  // } else {
+  //   return res.status(403).send({success: false, msg: 'Vous n\'avez pas les authorisations nécessaires.'});
+  // }
 });
 
 // Get liste des produits
