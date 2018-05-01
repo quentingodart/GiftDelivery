@@ -65,7 +65,6 @@ router.post('/signin', function(req, res) {
 router.get('/me', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = getToken(req.headers);
   if (token) {
-
     User.findOne({
       username: req.body.username
     }, function(err, user) {

@@ -13,12 +13,14 @@ import { of } from 'rxjs/observable/of';
 export class ProfilComponent implements OnInit {
 
   private userToken : string = "";
+  private username : string = "";
 
   private user : any = null;
 
   constructor(private http: HttpClient, private router: Router) {
 
     this.userToken = localStorage.getItem("userToken");
+    this.username = localStorage.getItem("username");
     this.getUser();
    }
 
@@ -26,13 +28,13 @@ export class ProfilComponent implements OnInit {
   }
 
   getUser() {
-    let httpOptions = {headers: new HttpHeaders({'Authorization': this.userToken})}
-    this.http.get('/api/me', httpOptions).subscribe(resp => {
-    this.user = resp;
-    console.log("Récuprération de l'utilisateur : " + this.user);
-    console.log("User1 : " + this.user.username);
-  }, err => {
-    console.log("Récupération profil erreur");
-  });
+  //   let httpOptions = {headers: new HttpHeaders({'Authorization': this.userToken}), body: this.username}
+  //   this.http.get('/api/me', httpOptions).subscribe(resp => {
+  //   this.user = resp;
+  //   console.log("Récuprération de l'utilisateur : " + this.user);
+  //   console.log("User1 : " + this.user.username);
+  // }, err => {
+  //   console.log("Récupération profil erreur");
+  // });
   }
 }
