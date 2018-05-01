@@ -62,9 +62,9 @@ router.post('/signin', function(req, res) {
 });
 
 // Get utilisateur courant
-router.get('/me', function(req, res, next) {
+router.get('/me', function(req, res) {
   User.findOne({
-    username: req.body.username
+    username: req.query.username
   }, function(err, user) {
     if (err) throw err;
 

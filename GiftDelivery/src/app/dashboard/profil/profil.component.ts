@@ -15,26 +15,23 @@ export class ProfilComponent implements OnInit {
   private userToken : string = "";
   private username : string = "";
 
-  private user : any = null;
+  private user : any;
 
   constructor(private http: HttpClient, private router: Router) {
 
     this.userToken = localStorage.getItem("userToken");
     this.username = localStorage.getItem("username");
-    this.getUser();
+    //this.getUser();
    }
 
   ngOnInit() {
-  }
-
-  getUser() {
-  //   let httpOptions = {headers: new HttpHeaders({'Authorization': this.userToken}), body: this.username}
-  //   this.http.get('/api/me', httpOptions).subscribe(resp => {
-  //   this.user = resp;
-  //   console.log("Récuprération de l'utilisateur : " + this.user);
-  //   console.log("User1 : " + this.user.username);
-  // }, err => {
-  //   console.log("Récupération profil erreur");
-  // });
+  this.http.get('/api/me', {params: {username:this.username}}).subscribe(data => {
+    this.user = data;
+    console.log(this.user);
+  }, err => {
+    if(err.status === 401) {
+      console.log("Récupération profil erreur");
+    }
+  });
   }
 }
