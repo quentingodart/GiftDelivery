@@ -32,14 +32,12 @@ constructor(private http: HttpClient, private router: Router) { }
         && this.email != "" && this.password != "" && this.confirmPassword != "") {
           this.message = null;
           if (this.password == this.confirmPassword) {
-            console.log("lastname : " + this.lastname + " firstname : " + this.firstname + " username : " + this.username + " email : " +
-            this.email + " password : " + this.password + " confirmPassword : " + this.confirmPassword);
+
             this.message = null;
 
             this.signupData = {username:this.username, firstname:this.firstname,
               lastname:this.lastname, email:this.email, password:this.password};
             this.http.post('/api/signup',this.signupData).subscribe(resp => {
-            console.log(resp);
             this.router.navigate(["/accueil"]);
           }, err => {
             this.message = err.error.msg;

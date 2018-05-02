@@ -27,7 +27,6 @@ export class ProfilComponent implements OnInit {
   ngOnInit() {
   this.http.get('/api/me', {params: {username:this.username}}).subscribe(data => {
     this.user = data;
-    console.log(this.user);
   }, err => {
     if(err.status === 401) {
       console.log("Récupération profil erreur");

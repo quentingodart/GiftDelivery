@@ -25,7 +25,6 @@ constructor(private http: HttpClient, private router: Router) { }
   }
 
   login() {
-    console.log("loginUsername : [" + this.loginUsername + "] + loginPassword : [" + this.loginPassword + "]");
     if (this.loginUsername != "" && this.loginPassword != "") {
 
       this.message = null;
